@@ -6,9 +6,11 @@
   --mute: #76746e;
   --line: rgba(12, 12, 13, 0.12);
   --signal: #ff4a1c;
-  --sans: var(--font-geist-sans), system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --mono: var(--font-geist-mono), ui-monospace, Menlo, monospace;
-  --serif: 'Instrument Serif', 'Times New Roman', serif;
+  /* one typeface for the whole site. --mono and --serif are kept as names for the
+     label and emphasis roles, but they all resolve to the same family. */
+  --sans: 'Space Grotesk Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono: var(--sans);
+  --serif: var(--sans);
   --gutter: clamp(18px, 4vw, 64px);
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -35,7 +37,8 @@ body { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none
 :focus-visible { outline: 2px solid var(--signal); outline-offset: 4px; }
 .defs { position: absolute; width: 0; height: 0; }
 
-em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: -0.02em; }
+/* emphasis is the same face in a lighter weight, not a second font */
+em { font-style: normal; font-weight: 300; }
 .label { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mute); }
 .w { display: inline-block; overflow: hidden; vertical-align: top; padding: 0.12em 0.06em 0.16em; margin: -0.12em -0.06em -0.16em; }
 .wi { display: inline-block; will-change: transform; }
@@ -99,7 +102,7 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spa
   font-size: clamp(54px, 11.6vw, 216px); line-height: 0.86; font-weight: 500; letter-spacing: -0.06em;
   margin: 18px 0 clamp(26px, 4vw, 54px) -0.04em; color: #fff; mix-blend-mode: difference;
 }
-.hero h1 em { letter-spacing: -0.035em; padding-right: 0.04em; }
+
 .hero-foot { display: flex; align-items: flex-end; justify-content: space-between; gap: 30px; flex-wrap: wrap; border-top: 1px solid var(--line); padding-top: 22px; }
 .hero-foot p { max-width: 30em; font-size: clamp(16px, 1.25vw, 19px); }
 .hero-hint { position: absolute; top: 50%; right: var(--gutter); writing-mode: vertical-rl; }
