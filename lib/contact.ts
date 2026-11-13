@@ -5,4 +5,6 @@ export const CONTACT = {
   whatsapp: '',
   whatsappText: "Hi Syed, I saw your portfolio and I'd like to talk about automating ",
   linkedin: 'https://www.linkedin.com/in/syedmursalin',
+  facebook: 'https://www.facebook.com/syedmursalinn/',
+  email: 'datawithmursalin@gmail.com',
 };

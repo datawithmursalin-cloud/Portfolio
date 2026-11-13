@@ -47,7 +47,26 @@ export default function Experience() {
       if (label) label.textContent = hasWa ? 'WhatsApp me' : 'Message me';
     });
 
-    if (reduce) { root.classList.add('ready', 'static'); return; }
+    // the workflow graph: p (0 to 1) draws each set of connections, then lights the row it reaches
+    const flow = document.querySelector<HTMLElement>('.flow');
+    const flowRows = flow ? Array.from(flow.querySelectorAll<HTMLElement | SVGElement>('.fnode, .flow-steps li')) : [];
+    const flowEdges = flow ? Array.from(flow.querySelectorAll<SVGPathElement>('.fdraw, .fdots')) : [];
+    const drawFlow = (p: number) => {
+      const s = p * 6.5;
+      const now = Math.min(5, Math.floor(s));
+      flowRows.forEach((el) => {
+        const r = +el.dataset.row!;
+        el.classList.toggle('on', s >= (r || 0.12));
+        el.classList.toggle('now', s >= 0.12 && r === now);
+      });
+      flowEdges.forEach((el) => {
+        const v = Math.min(Math.max((s - +el.dataset.row! - 0.3) / 0.7, 0), 1);
+        if (el.classList.contains('fdraw')) el.style.strokeDashoffset = String(1 - v);
+        else el.style.opacity = v >= 1 ? '1' : '0';
+      });
+    };
+
+    if (reduce) { drawFlow(1); root.classList.add('ready', 'static'); return; }
 
     // smooth scroll, driven by GSAP's ticker so ScrollTrigger stays in sync
     const lenis = new Lenis({ lerp: 0.11 });
@@ -127,6 +146,12 @@ export default function Experience() {
             onUpdate: (self) => { root.style.setProperty('--pipe', self.progress.toFixed(4)); light(self.progress * 1.12); },
           },
         });
+      });
+      mm.add('(min-width: 901px)', () => {
+        ScrollTrigger.create({ trigger: '.flow', start: 'top top', end: 'bottom bottom', scrub: 0.4, onUpdate: (self) => drawFlow(self.progress) });
+      });
+      mm.add('(max-width: 900px)', () => {
+        ScrollTrigger.create({ trigger: '.flow-graph', start: 'top 75%', end: 'bottom 55%', scrub: 0.4, onUpdate: (self) => drawFlow(self.progress) });
       });
       mm.add('(max-width: 900px)', () => {
         ScrollTrigger.create({
