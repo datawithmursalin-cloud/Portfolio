@@ -25,19 +25,19 @@ const TOOLS: [string, string][] = [
 ];
 
 const CAPABILITIES = [
-  ['Custom MCP servers', 'Model Context Protocol servers built around your business, so an AI assistant can read and act on your own tools and data in plain English, with permissions you control.', 'Any tool · Any data · Your rules'],
-  ['CRM workflows', 'Pipelines, triggers and follow-up sequences inside GoHighLevel, Close, HubSpot and Salesforce, so every lead is routed, tagged and chased without anyone remembering to do it.', 'GoHighLevel · Close · HubSpot · Salesforce'],
-  ['Data analysis and visualisation', 'Messy exports cleaned, analysed and turned into charts and dashboards people actually read, from a one-off question to a report that refreshes itself.', 'Python · SQL · Spreadsheets'],
-  ['Scheduled AI tasks', 'The daily jobs, handed to AI and run on a timer: call summaries, lead notes, follow-up drafts and KPI reports, reviewed by a person before anything is sent.', 'Daily runs · Summaries · Reports'],
-  ['Websites and backends', 'Marketing sites with the plumbing behind them: subscription billing, booking, transactional email and data sync, shipped and maintained.', 'Next.js · Stripe · PostgreSQL'],
+  ['Custom MCP servers', "An MCP server is a connector that lets an AI assistant like Claude use your own software. I build one around your tools, so you can ask for something in plain English and it reads or updates the real data. You decide what it is allowed to touch.", 'Claude · Codex · Your own tools'],
+  ['CRM workflows', 'I set up pipelines, triggers and follow-up sequences in GoHighLevel, Close, HubSpot and Salesforce. New leads get assigned, tagged and followed up, even on the days your team is flat out.', 'GoHighLevel · Close · HubSpot · Salesforce'],
+  ['Data analysis and visualisation', 'Send me the messy export. I clean it, work out what it says and turn it into charts or a dashboard. If you need the same report every week, I set it up to refresh on its own.', 'Python · SQL · Spreadsheets'],
+  ['Scheduled AI tasks', "Jobs that run on a timer with nobody starting them: yesterday's call summary, notes on new leads, follow-up drafts, the weekly KPI report. A person still checks anything before it goes out.", 'Daily runs · Summaries · Reports'],
+  ['Websites and backends', "Websites, plus the parts behind them that visitors never see: subscription billing, booking, automatic emails and keeping data in sync. I keep them running after launch too.", 'Next.js · Stripe · PostgreSQL'],
 ];
 
 const STAGES = [
-  ['Lead arrives', 'A form, a call or a list import. Whatever the source, it lands in one place.', ['source', '"web form"'], ['phone', '"+1 ••• ••• 0142"']],
-  ['AI qualifies', 'An agent checks the details, flags duplicates and scores how ready the seller is.', ['duplicate', 'false'], ['score', '0.86']],
-  ['CRM updates', 'The record is created, tagged and placed in the right pipeline stage.', ['stage', '"Hot lead"'], ['owner', '"Acquisitions"']],
-  ['Dialer queues', 'The callback is scheduled and the caller sees the notes before they ring.', ['queue', '"Today, 10:30"'], ['notes', 'attached']],
-  ['Report writes itself', 'At the end of the day the numbers and next steps arrive without anyone compiling them.', ['report', '"Daily KPI"'], ['sent', 'true']],
+  ['Lead arrives', 'From a web form, a phone call or an imported list. They all end up in the same place.', ['source', '"web form"'], ['phone', '"+1 ••• ••• 0142"']],
+  ['AI checks it', 'It looks for duplicates and scores how ready the seller is to talk.', ['duplicate', 'false'], ['score', '0.86']],
+  ['CRM updates', 'The contact is created, tagged and put in the right pipeline stage.', ['stage', '"Hot lead"'], ['owner', '"Acquisitions"']],
+  ['Dialer queues', 'A callback is scheduled. The caller sees the notes before they dial.', ['queue', '"Today, 10:30"'], ['notes', 'attached']],
+  ['The report goes out', 'At the end of the day the numbers and next steps land in your inbox. Nobody has to put them together.', ['report', '"Daily KPI"'], ['sent', 'true']],
 ];
 
 // width, left %, length px (fixed so server and client render the same drips)
@@ -91,16 +91,15 @@ export default function Page() {
           <div className="hero-form" data-liquid-anchor />
           <div className="hero-copy">
             <p className="label" data-hero-fade>AI automation · Custom MCP servers · Data workflows</p>
-            <h1 data-split data-hero>Work that <em>flows</em><br />by itself.</h1>
+            <h1 data-split data-hero>I automate<br />the <em>busywork.</em></h1>
             <div className="hero-foot">
-              <p data-hero-fade>I'm Syed. I build the workflows, connectors and AI agents that sit between your tools, your data and your team.</p>
+              <p data-hero-fade>I'm Syed. I started out cold calling, ended up running the team and its CRM, and now I build the automations I wish I'd had back then.</p>
               <div className="actions" data-hero-fade>
                 <a className="btn btn-ink" data-contact href="#contact"><span data-contact-label>Message me</span><b>↗</b></a>
                 <a className="btn" href="#work">See the work</a>
               </div>
             </div>
           </div>
-          <p className="hero-hint label" data-hero-fade>It follows your cursor. Click or drag to carve it. It grows back.</p>
         </section>
 
         {/* MARQUEE */}
@@ -119,7 +118,7 @@ export default function Page() {
         <section className="statement">
           <p className="label">01 — Introduction</p>
           <p className="statement-text" data-scrub>
-            Most teams lose hours to work that software should already be doing. I find those hours, then build the <em>quiet systems</em> that give them back: a CRM that updates itself, a dialer that knows who to call, and an assistant that answers questions about your pipeline.
+            Most of what slows a team down is small. Someone forgets to log a call. A lead sits for a week because nobody was told. A report gets built by hand every Friday. I've done all of those jobs myself, so I know <em>which ones a computer should be doing</em>, and I build the thing that does them.
           </p>
         </section>
 
@@ -127,7 +126,7 @@ export default function Page() {
         <section className="caps" id="capabilities">
           <header className="head">
             <p className="label">02 — Capabilities</p>
-            <h2 data-split>Five ways I take work <em>off your plate.</em></h2>
+            <h2 data-split>What I <em>build.</em></h2>
           </header>
           <ul className="cap-list">
             {CAPABILITIES.map(([title, body, tags], i) => (
@@ -149,8 +148,8 @@ export default function Page() {
           <div className="pipe-track">
             <div className="pipe-intro">
               <p className="label">04 — Pipeline</p>
-              <h2 data-split>One lead.<br /><em>Zero</em> copy and paste.</h2>
-              <p className="pipe-sub">Follow a single enquiry through an automated acquisition pipeline. Keep scrolling.</p>
+              <h2 data-split>Follow <em>one lead</em><br />through it.</h2>
+              <p className="pipe-sub">This is what happens to a single enquiry in the kind of pipeline I build for acquisitions teams. Keep scrolling.</p>
             </div>
             <div className="pipe-stages">
               <div className="pipe-line"><i /><b /></div>
@@ -174,8 +173,8 @@ export default function Page() {
         <section className="ask dark" id="demo">
           <header className="head">
             <p className="label">05 — Ask your tools</p>
-            <h2 data-split>Ask a question.<br />Get an <em>answer</em>, not a dashboard.</h2>
-            <p className="sub" data-fade>This is what an MCP connector feels like. Pick a request and watch the assistant call the tools. Everything shown is sample data.</p>
+            <h2 data-split>Ask your tools<br /><em>a question.</em></h2>
+            <p className="sub" data-fade>This is roughly what using an MCP server is like. Pick a question and watch the assistant go and get the answer. It's all sample data.</p>
           </header>
           <div data-fade><Demo /></div>
         </section>
@@ -185,7 +184,7 @@ export default function Page() {
         <section className="work" id="work">
           <header className="head">
             <p className="label">06 — Selected work</p>
-            <h2 data-split>Built, shipped and <em>still running.</em></h2>
+            <h2 data-split>Things I've <em>built.</em></h2>
           </header>
 
           <article className="work-panel">
@@ -193,11 +192,11 @@ export default function Page() {
               <div className="work-copy">
                 <p className="label">01 / Founder</p>
                 <h3>VoloLeads</h3>
-                <p>A managed seller-acquisition service for US real estate wholesalers, investors and agents. I built the company and the systems under it.</p>
+                <p>My company. We run seller acquisition for US real estate wholesalers, investors and agents. I built the business and the systems it runs on.</p>
                 <ul>
-                  <li>Subscription billing on Stripe with webhooks and renewal emails</li>
-                  <li>Onboarding calls booked into Google Calendar and Meet</li>
-                  <li>CRM builds in GoHighLevel and Podio for acquisitions teams</li>
+                  <li>Subscription billing on Stripe, with webhooks and renewal emails</li>
+                  <li>Onboarding calls that book themselves into Google Calendar and Meet</li>
+                  <li>CRM builds in GoHighLevel and Podio for clients' acquisitions teams</li>
                 </ul>
                 <a className="link" href="https://www.vololeads.com" target="_blank" rel="noopener">vololeads.com <b>↗</b></a>
               </div>
@@ -210,14 +209,14 @@ export default function Page() {
               <div className="work-copy">
                 <p className="label">02 / Workflow automation</p>
                 <h3>Custom MCPs</h3>
-                <p>Model Context Protocol servers built around one business's needs, giving an AI assistant direct, permissioned access to the tools and data its team already uses.</p>
+                <p>MCP servers I build for one business at a time. They give an AI assistant access to the tools and data that team already uses, limited to what the owner allows.</p>
                 <ul>
-                  <li>Connectors for CRMs, dialers, spreadsheets, databases and internal tools</li>
-                  <li>Data analysis and charts on request, asked for in plain English</li>
-                  <li>Scheduled tasks that run every day and report back</li>
-                  <li>Read first, and review before anything is written back</li>
+                  <li>Connectors for CRMs, dialers, spreadsheets, databases and in-house tools</li>
+                  <li>Ask for an analysis or a chart in plain English</li>
+                  <li>Tasks that run every day and report back</li>
+                  <li>It reads first. Anything it wants to change waits for approval</li>
                 </ul>
-                <a className="link" href="#demo">See how it feels <b>↑</b></a>
+                <a className="link" href="#demo">Try the demo <b>↑</b></a>
               </div>
               <div className="work-code" aria-hidden="true">
                 <p className="label">Illustrative tool definition</p>
@@ -239,11 +238,11 @@ export default function Page() {
               <div className="work-copy">
                 <p className="label">03 / Studio</p>
                 <h3>VoloTech</h3>
-                <p>Websites, applications, backend systems, MCP integrations and automation for businesses that need the missing piece built, then looked after.</p>
+                <p>My studio. We build websites, apps, backends, MCP integrations and automations for businesses, and we stay on to maintain them.</p>
                 <ul>
-                  <li>React, Next.js and TypeScript on the front</li>
-                  <li>Node.js, PostgreSQL and Python behind it</li>
-                  <li>Seven working demo builds on the site</li>
+                  <li>React, Next.js and TypeScript on the front end</li>
+                  <li>Node.js, PostgreSQL and Python on the back end</li>
+                  <li>Seven working demos you can try on the site</li>
                 </ul>
                 <a className="link" href="https://www.volotech.us" target="_blank" rel="noopener">volotech.us <b>↗</b></a>
               </div>
@@ -256,7 +255,7 @@ export default function Page() {
         <section className="proof" id="results">
           <header className="head">
             <p className="label">07 — Results</p>
-            <h2 data-split>Numbers from the company <em>I run on these systems.</em></h2>
+            <h2 data-split>VoloLeads <em>so far.</em></h2>
           </header>
           <dl className="stats">
             <div data-fade><dt data-count="50" data-suffix="+">50+</dt><dd>clients across the United States</dd></div>
@@ -284,13 +283,13 @@ export default function Page() {
         <section className="about" id="about">
           <header className="head">
             <p className="label">08 — About</p>
-            <h2 data-split>Operator first. <em>Builder second.</em></h2>
+            <h2 data-split>I did the job <em>before I automated it.</em></h2>
           </header>
           <div className="about-grid">
             <div className="about-copy" data-fade>
-              <p>I started on the phones in 2023, cold calling sellers for a Florida real estate group. Within two years I was leading the acquisition team and running its CRM workflows, and in 2026 I founded VoloLeads and VoloTech.</p>
-              <p>That is why my automations look the way they do. I know which steps a sales team skips when it gets busy, where leads go quiet and which reports nobody reads.</p>
-              <p>I am also an economics graduate and a university research assistant, so the data side gets the same care as the build.</p>
+              <p>I started on the phones in 2023, cold calling sellers for a Florida real estate group. Within two years I was leading the acquisition team and looking after its CRM. In 2026 I started VoloLeads and VoloTech.</p>
+              <p>So when I automate something, I've usually done it by hand first. I know which steps get skipped on a busy day, where leads go cold and which reports nobody opens.</p>
+              <p>I also have an economics degree and work as a university research assistant, mostly cleaning survey data and running regressions in Stata. That's where the data side comes from.</p>
               <p className="label">Based in Dhaka, Bangladesh · Working with clients in the United States</p>
               <div className="about-links">
                 <a className="link" href={`mailto:${CONTACT.email}`}>{CONTACT.email} <b>↗</b></a>
@@ -313,8 +312,8 @@ export default function Page() {
         <section className="contact" id="contact">
           <div className="contact-form" data-liquid-anchor />
           <p className="label">09 — Contact</p>
-          <h2 data-split>Tell me the task you are <em>tired of doing.</em></h2>
-          <p className="sub" data-fade>Send one message describing it. I will reply with how I would automate it and what it would take.</p>
+          <h2 data-split>What are you <em>tired of doing</em> by hand?</h2>
+          <p className="sub" data-fade>Send me a message about it. I'll tell you how I'd automate it and roughly what it would take.</p>
           <div className="actions" data-fade>
             <a className="btn btn-ink btn-xl" data-contact href="https://www.linkedin.com/in/syedmursalin"><span data-contact-label>Message me</span><b>↗</b></a>
             <a className="btn btn-xl" href={`mailto:${CONTACT.email}`}>Email me</a>

@@ -14,13 +14,13 @@ const SCENARIOS: Scenario[] = [
     ],
     answer: (
       <>
-        <p><b>Three leads are worth your first hour.</b></p>
+        <p><b>Start with these three.</b></p>
         <ol>
           <li>Lead A asked for a callback on Tuesday and nobody has rung back.</li>
           <li>Lead B opened your offer email twice yesterday.</li>
           <li>Lead C was marked hot and has gone nine days without a touch.</li>
         </ol>
-        <p className="quiet">Shall I draft the follow-ups? You review before anything is sent.</p>
+        <p className="quiet">Want me to draft the follow-ups? Nothing goes out until you've read them.</p>
       </>
     ),
   },
@@ -32,7 +32,7 @@ const SCENARIOS: Scenario[] = [
     ],
     answer: (
       <>
-        <p><b>Yesterday, in one paragraph.</b></p>
+        <p><b>Here's yesterday.</b></p>
         <p>The team made 412 dials and had 38 conversations. Six sellers were qualified and two asked for an offer. Price was the most common objection.</p>
         <p className="quiet">The full breakdown is saved to the daily report.</p>
       </>
@@ -46,8 +46,8 @@ const SCENARIOS: Scenario[] = [
     ],
     answer: (
       <>
-        <p><b>27 likely duplicates found.</b></p>
-        <p>21 match on phone number and 6 on email. The merges are prepared and nothing has been changed.</p>
+        <p><b>I found 27 likely duplicates.</b></p>
+        <p>21 match on phone number and 6 on email. I've lined up the merges but haven't changed anything yet.</p>
         <p className="quiet">Approve all, review one by one, or cancel.</p>
       </>
     ),
