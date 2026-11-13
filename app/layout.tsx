@@ -1,7 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { GeistSans } from 'geist/font/sans';
-import { GeistMono } from 'geist/font/mono';
-import '@fontsource/instrument-serif/400-italic.css';
+import '@fontsource-variable/space-grotesk';
 import './globals.css';
 import { SITE_URL } from '@/lib/site';
 import { CONTACT } from '@/lib/contact';
@@ -50,7 +48,7 @@ const PERSON = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
+    <html lang="en">
       <body>
         {children}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(PERSON) }} />
