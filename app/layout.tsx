@@ -16,15 +16,15 @@ export const metadata: Metadata = {
   alternates: { canonical: './' },
   authors: [{ name: 'Syed M. Mursalin', url: CONTACT.linkedin }],
   openGraph: {
-    title: 'Syed M. Mursalin | Work that flows by itself',
+    title: 'Syed M. Mursalin | I automate the busywork',
     description: SHARE,
     type: 'website',
     url: './',
     siteName: 'Syed M. Mursalin',
     locale: 'en_US',
-    images: [{ url: './og.jpg', width: 1200, height: 630, alt: 'Syed M. Mursalin: work that flows by itself' }],
+    images: [{ url: './og.jpg', width: 1200, height: 630, alt: 'Syed M. Mursalin: I automate the busywork' }],
   },
-  twitter: { card: 'summary_large_image', title: 'Syed M. Mursalin | Work that flows by itself', description: SHARE, images: ['./og.jpg'] },
+  twitter: { card: 'summary_large_image', title: 'Syed M. Mursalin | I automate the busywork', description: SHARE, images: ['./og.jpg'] },
   robots: { index: true, follow: true },
 };
 

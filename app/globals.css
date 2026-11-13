@@ -105,7 +105,6 @@ em { font-style: normal; font-weight: 300; }
 
 .hero-foot { display: flex; align-items: flex-end; justify-content: space-between; gap: 30px; flex-wrap: wrap; border-top: 1px solid var(--line); padding-top: 22px; }
 .hero-foot p { max-width: 30em; font-size: clamp(16px, 1.25vw, 19px); }
-.hero-hint { position: absolute; top: 50%; right: var(--gutter); writing-mode: vertical-rl; }
 [data-hero-fade] { opacity: 0; transform: translateY(24px); }
 .static [data-hero-fade] { opacity: 1; transform: none; }
 
@@ -318,7 +317,6 @@ h2 { font-size: clamp(38px, 6.6vw, 118px); line-height: 0.94; font-weight: 500; 
   /* sized so "Work that flows" stays on one line */
   .hero h1 { font-size: 13vw; margin: 12px 0 22px -0.03em; }
   .hero-foot { padding-top: 18px; }
-  .hero-hint { display: none; }
   .hero-foot { flex-direction: column; align-items: stretch; gap: 22px; }
   .actions .btn { flex: 1 1 auto; justify-content: space-between; }
   .cap-list li { grid-template-columns: 44px 1fr; gap: 10px 12px; padding: 26px 0; }

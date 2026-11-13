@@ -5,12 +5,12 @@
 */
 
 const STEPS = [
-  ['Something starts it', 'A schedule, a new form entry or a message in chat. Nobody has to remember to do it.'],
-  ['The agent picks it up', 'An AI agent reads the request and works out which of your tools it needs.'],
-  ['Your tools answer', 'Custom MCP servers fetch from the CRM, spreadsheets and database, within the permissions you set.'],
-  ['The data gets worked', 'Cleaned, analysed and charted in the same run, not exported and pasted.'],
-  ['You approve', 'Anything that sends or writes waits for a person to say yes.'],
-  ['It lands where you work', 'A report in the inbox, an updated CRM and a dashboard that is already current.'],
+  ['Something starts it', "A set time each morning, a new form entry, or you typing a message. You don't have to remember to kick it off."],
+  ['The AI agent picks it up', 'It reads what was asked and decides which of your tools it needs.'],
+  ['It pulls from your tools', "The MCP servers I built fetch what it needs from your CRM, spreadsheets and database. It only sees what you've allowed."],
+  ['It does the work', 'It cleans the data, runs the numbers and makes the chart, all in one go.'],
+  ['You check it', 'Nothing gets sent or changed until you say yes.'],
+  ['It shows up where you work', 'The report is in your inbox, the CRM is updated and the dashboard is current.'],
 ];
 
 const X = [110, 320, 530];
@@ -20,7 +20,7 @@ const ROWS: string[][] = [
   ['AI agent'],
   ['MCP · CRM', 'MCP · Sheets', 'MCP · Database'],
   ['Analyse and chart'],
-  ['You approve'],
+  ['You check it'],
   ['Report sent', 'CRM updated', 'Dashboard live'],
 ];
 const H = 48;
@@ -44,7 +44,7 @@ export default function Flow() {
       <div className="flow-sticky">
         <div className="flow-copy">
           <p className="label">03 — How a workflow runs</p>
-          <h2 data-split>One run, <em>start to finish.</em></h2>
+          <h2 data-split>What happens in <em>one run.</em></h2>
           <ol className="flow-steps">
             {STEPS.map(([title, body], i) => (
               <li key={title} data-row={i}>
