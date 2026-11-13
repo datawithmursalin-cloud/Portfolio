@@ -259,14 +259,18 @@ export default function Page() {
           </header>
           <div className="about-grid">
             <div className="about-copy" data-fade>
-              <p>I started on the phones, cold calling real estate sellers, then built a company around doing that well for other people.</p>
-              <p>That is why my automations look the way they do. I know which steps a sales team skips when it gets busy, where leads go quiet and which reports nobody reads. I build for those moments.</p>
+              <p>I started on the phones in 2023, cold calling sellers for a Florida real estate group. Within two years I was leading the acquisition team and running its CRM workflows, and in 2026 I founded VoloLeads.</p>
+              <p>That is why my automations look the way they do. I know which steps a sales team skips when it gets busy, where leads go quiet and which reports nobody reads.</p>
+              <p>I am also an economics graduate and a university research assistant, so the data side gets the same care as the build.</p>
+              <p className="label">Based in Dhaka, Bangladesh · Working with clients in the United States</p>
               <a className="link" href="https://www.linkedin.com/in/syedmursalin" target="_blank" rel="noopener">Full history on LinkedIn <b>↗</b></a>
             </div>
             <ol className="timeline">
-              <li data-fade><span>Now</span><h3>Founder, VoloLeads</h3><p>Seller-acquisition teams, CRM setups and AI workflows for clients across the United States.</p></li>
-              <li data-fade><span>Now</span><h3>VoloTech</h3><p>Websites, applications, MCP integrations and automation for businesses outside real estate.</p></li>
-              <li data-fade><span>4+ years</span><h3>Real estate cold calling</h3><p>Hands-on experience qualifying sellers, which shapes every workflow I build.</p></li>
+              <li data-fade><span>2026 — Now</span><h3>Founder &amp; CEO, VoloLeads</h3><p>Virtual assistant services and automated solutions for real estate wholesalers in the United States.</p></li>
+              <li data-fade><span>2025 — Now</span><h3>Lead Manager, All With Realty</h3><p>Joined as Virtual Acquisition Team Leader, running a remote cold calling team and its CRM workflows. Conversion rates rose by over 90%, with more than $24,000 in revenue in three months.</p></li>
+              <li data-fade><span>2024 — Now</span><h3>Research Assistant, North South University</h3><p>Cleaning large survey datasets and running regression models in Stata for a study of labour-market effects in Cox's Bazar.</p></li>
+              <li data-fade><span>2023 — 2025</span><h3>Virtual Telemarketer, Rise Real Estate Group</h3><p>Lead generation and first-contact outreach for the US real estate market, handing qualified sellers to the acquisition team.</p></li>
+              <li data-fade><span>2022 — 2025</span><h3>BS in Economics, North South University</h3><p>Followed by certifications in machine learning foundations and Stata.</p></li>
             </ol>
           </div>
         </section>
