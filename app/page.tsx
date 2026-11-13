@@ -1,13 +1,34 @@
 import Liquid from '@/components/Liquid';
 import Experience from '@/components/Experience';
 import Demo from '@/components/Demo';
+import Flow from '@/components/Flow';
+import { ICONS } from '@/lib/icons';
+import { CONTACT } from '@/lib/contact';
+import { BASE } from '@/lib/site';
 
-const TOOLS = ['GoHighLevel', 'Close', 'HubSpot', 'Model Context Protocol', 'Claude', 'n8n', 'Next.js', 'Node.js', 'PostgreSQL', 'Stripe', 'Google Workspace', 'Python'];
+function Shot({ name, alt }: { name: string; alt: string }) {
+  return (
+    <img
+      src={`${BASE}/work/${name}-900.webp`}
+      srcSet={`${BASE}/work/${name}-900.webp 900w, ${BASE}/work/${name}-1800.webp 1800w`}
+      sizes="(max-width: 900px) 92vw, 50vw"
+      width={1800} height={1125} alt={alt} loading="lazy" decoding="async"
+    />
+  );
+}
+
+const TOOLS: [string, string][] = [
+  ['Model Context Protocol', 'mcp'], ['Claude', 'claude'], ['Codex', 'openai'], ['n8n', 'n8n'],
+  ['GoHighLevel', 'ghl'], ['Close', 'close'], ['HubSpot', 'hubspot'], ['Salesforce', 'salesforce'],
+  ['Microsoft Office', 'microsoft'], ['Google Workspace', 'google'], ['Python', 'python'], ['PostgreSQL', 'postgres'],
+  ['Stripe', 'stripe'], ['Next.js', 'next'], ['Node.js', 'node'],
+];
 
 const CAPABILITIES = [
-  ['CRM workflows', 'Pipelines, triggers and follow-up sequences inside GoHighLevel, Close and HubSpot, so every lead is routed, tagged and chased without anyone remembering to do it.', 'GoHighLevel · Close · HubSpot'],
-  ['MCP connectors', 'Custom Model Context Protocol servers that let an AI assistant read and act on your CRM, dialer and reporting in plain English, with permissions you control.', 'CRM · Dialer · Reporting'],
-  ['Everyday AI automation', 'The small daily jobs, handed to AI: call summaries, lead notes, follow-up drafts and KPI reports, reviewed by a person before anything is sent.', 'Summaries · Drafts · Reports'],
+  ['Custom MCP servers', 'Model Context Protocol servers built around your business, so an AI assistant can read and act on your own tools and data in plain English, with permissions you control.', 'Any tool · Any data · Your rules'],
+  ['CRM workflows', 'Pipelines, triggers and follow-up sequences inside GoHighLevel, Close, HubSpot and Salesforce, so every lead is routed, tagged and chased without anyone remembering to do it.', 'GoHighLevel · Close · HubSpot · Salesforce'],
+  ['Data analysis and visualisation', 'Messy exports cleaned, analysed and turned into charts and dashboards people actually read, from a one-off question to a report that refreshes itself.', 'Python · SQL · Spreadsheets'],
+  ['Scheduled AI tasks', 'The daily jobs, handed to AI and run on a timer: call summaries, lead notes, follow-up drafts and KPI reports, reviewed by a person before anything is sent.', 'Daily runs · Summaries · Reports'],
   ['Websites and backends', 'Marketing sites with the plumbing behind them: subscription billing, booking, transactional email and data sync, shipped and maintained.', 'Next.js · Stripe · PostgreSQL'],
 ];
 
@@ -49,12 +70,12 @@ export default function Page() {
           <feColorMatrix in="b" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 24 -10" />
         </filter>
       </svg>
-      <div className="intro" aria-hidden="true"><span>Syed Mursalin</span><i /></div>
+      <div className="intro" aria-hidden="true"><span>Syed M. Mursalin</span><i /></div>
       <Liquid />
       <Experience />
 
       <header className="nav">
-        <a href="#top" className="nav-name">Syed Mursalin</a>
+        <a href="#top" className="nav-name">Syed M. Mursalin</a>
         <nav aria-label="Sections">
           <a href="#capabilities">Capabilities</a>
           <a href="#pipeline">Pipeline</a>
@@ -69,23 +90,28 @@ export default function Page() {
         <section className="hero" id="top">
           <div className="hero-form" data-liquid-anchor />
           <div className="hero-copy">
-            <p className="label" data-hero-fade>AI automation · CRM systems · MCP connectors</p>
+            <p className="label" data-hero-fade>AI automation · Custom MCP servers · Data workflows</p>
             <h1 data-split data-hero>Work that <em>flows</em><br />by itself.</h1>
             <div className="hero-foot">
-              <p data-hero-fade>I'm Syed. I build the workflows, connectors and AI agents that sit between your CRM, your dialer and your team.</p>
+              <p data-hero-fade>I'm Syed. I build the workflows, connectors and AI agents that sit between your tools, your data and your team.</p>
               <div className="actions" data-hero-fade>
                 <a className="btn btn-ink" data-contact href="#contact"><span data-contact-label>Message me</span><b>↗</b></a>
                 <a className="btn" href="#work">See the work</a>
               </div>
             </div>
           </div>
-          <p className="hero-hint label" data-hero-fade>It follows your cursor. Click to disturb it.</p>
+          <p className="hero-hint label" data-hero-fade>It follows your cursor. Click or drag to carve it. It grows back.</p>
         </section>
 
         {/* MARQUEE */}
         <div className="marquee" aria-label="Tools I work with">
           <div className="marquee-track">
-            {[0, 1].map((k) => TOOLS.map((t) => <span key={k + t} aria-hidden={k === 1}>{t}</span>))}
+            {[0, 1].map((k) => TOOLS.map(([name, icon]) => (
+              <span key={k + name} aria-hidden={k === 1}>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d={ICONS[icon]} /></svg>
+                {name}
+              </span>
+            )))}
           </div>
         </div>
 
@@ -101,7 +127,7 @@ export default function Page() {
         <section className="caps" id="capabilities">
           <header className="head">
             <p className="label">02 — Capabilities</p>
-            <h2 data-split>Four ways I take work <em>off your plate.</em></h2>
+            <h2 data-split>Five ways I take work <em>off your plate.</em></h2>
           </header>
           <ul className="cap-list">
             {CAPABILITIES.map(([title, body, tags], i) => (
@@ -115,12 +141,14 @@ export default function Page() {
           </ul>
         </section>
 
+        <Flow />
+
         {/* PIPELINE (dark) */}
         <Drip tone="paper" />
         <section className="pipe dark" id="pipeline">
           <div className="pipe-track">
             <div className="pipe-intro">
-              <p className="label">03 — Pipeline</p>
+              <p className="label">04 — Pipeline</p>
               <h2 data-split>One lead.<br /><em>Zero</em> copy and paste.</h2>
               <p className="pipe-sub">Follow a single enquiry through an automated acquisition pipeline. Keep scrolling.</p>
             </div>
@@ -145,7 +173,7 @@ export default function Page() {
         {/* DEMO (dark) */}
         <section className="ask dark" id="demo">
           <header className="head">
-            <p className="label">04 — Ask your tools</p>
+            <p className="label">05 — Ask your tools</p>
             <h2 data-split>Ask a question.<br />Get an <em>answer</em>, not a dashboard.</h2>
             <p className="sub" data-fade>This is what an MCP connector feels like. Pick a request and watch the assistant call the tools. Everything shown is sample data.</p>
           </header>
@@ -156,7 +184,7 @@ export default function Page() {
         {/* WORK */}
         <section className="work" id="work">
           <header className="head">
-            <p className="label">05 — Selected work</p>
+            <p className="label">06 — Selected work</p>
             <h2 data-split>Built, shipped and <em>still running.</em></h2>
           </header>
 
@@ -173,19 +201,20 @@ export default function Page() {
                 </ul>
                 <a className="link" href="https://www.vololeads.com" target="_blank" rel="noopener">vololeads.com <b>↗</b></a>
               </div>
-              <div className="work-shot"><div className="chrome"><i /><i /><i /><span>vololeads.com</span></div><img src="/work/vololeads.jpg" alt="The VoloLeads website home page" loading="lazy" /></div>
+              <div className="work-shot"><div className="chrome"><i /><i /><i /><span>vololeads.com</span></div><Shot name="vololeads" alt="The VoloLeads website home page" /></div>
             </div>
           </article>
 
           <article className="work-panel">
             <div className="work-inner tone-ink">
               <div className="work-copy">
-                <p className="label">02 / MCP servers</p>
-                <h3>VoloLeads MCPs</h3>
-                <p>Model Context Protocol connectors that give an AI assistant direct, permissioned access to the tools a sales floor lives in.</p>
+                <p className="label">02 / Workflow automation</p>
+                <h3>Custom MCPs</h3>
+                <p>Model Context Protocol servers built around one business's needs, giving an AI assistant direct, permissioned access to the tools and data its team already uses.</p>
                 <ul>
-                  <li>CRM connector: find leads, read activity, draft follow-ups</li>
-                  <li>Dialer connector: call outcomes, dispositions and recordings</li>
+                  <li>Connectors for CRMs, dialers, spreadsheets, databases and internal tools</li>
+                  <li>Data analysis and charts on request, asked for in plain English</li>
+                  <li>Scheduled tasks that run every day and report back</li>
                   <li>Read first, and review before anything is written back</li>
                 </ul>
                 <a className="link" href="#demo">See how it feels <b>↑</b></a>
@@ -200,7 +229,7 @@ export default function Page() {
     `}<b>{`return`}</b>{` rank(leads);
   }
 );`}</pre>
-                <div className="work-wires"><span>CRM</span><span>Dialer</span><span>Reporting</span><b>AI</b></div>
+                <div className="work-wires"><span>CRM</span><span>Data</span><span>Charts</span><span>Schedules</span><b>AI</b></div>
               </div>
             </div>
           </article>
@@ -218,7 +247,7 @@ export default function Page() {
                 </ul>
                 <a className="link" href="https://www.volotech.us" target="_blank" rel="noopener">volotech.us <b>↗</b></a>
               </div>
-              <div className="work-shot"><div className="chrome"><i /><i /><i /><span>volotech.us</span></div><img src="/work/volotech.jpg" alt="The VoloTech website home page" loading="lazy" /></div>
+              <div className="work-shot"><div className="chrome"><i /><i /><i /><span>volotech.us</span></div><Shot name="volotech" alt="The VoloTech website home page" /></div>
             </div>
           </article>
         </section>
@@ -226,7 +255,7 @@ export default function Page() {
         {/* PROOF */}
         <section className="proof" id="results">
           <header className="head">
-            <p className="label">06 — Results</p>
+            <p className="label">07 — Results</p>
             <h2 data-split>Numbers from the company <em>I run on these systems.</em></h2>
           </header>
           <dl className="stats">
@@ -254,19 +283,24 @@ export default function Page() {
         {/* ABOUT */}
         <section className="about" id="about">
           <header className="head">
-            <p className="label">07 — About</p>
+            <p className="label">08 — About</p>
             <h2 data-split>Operator first. <em>Builder second.</em></h2>
           </header>
           <div className="about-grid">
             <div className="about-copy" data-fade>
-              <p>I started on the phones in 2023, cold calling sellers for a Florida real estate group. Within two years I was leading the acquisition team and running its CRM workflows, and in 2026 I founded VoloLeads.</p>
+              <p>I started on the phones in 2023, cold calling sellers for a Florida real estate group. Within two years I was leading the acquisition team and running its CRM workflows, and in 2026 I founded VoloLeads and VoloTech.</p>
               <p>That is why my automations look the way they do. I know which steps a sales team skips when it gets busy, where leads go quiet and which reports nobody reads.</p>
               <p>I am also an economics graduate and a university research assistant, so the data side gets the same care as the build.</p>
               <p className="label">Based in Dhaka, Bangladesh · Working with clients in the United States</p>
-              <a className="link" href="https://www.linkedin.com/in/syedmursalin" target="_blank" rel="noopener">Full history on LinkedIn <b>↗</b></a>
+              <div className="about-links">
+                <a className="link" href={`mailto:${CONTACT.email}`}>{CONTACT.email} <b>↗</b></a>
+                <a className="link" href={CONTACT.linkedin} target="_blank" rel="noopener">Full history on LinkedIn <b>↗</b></a>
+                <a className="link" href={CONTACT.facebook} target="_blank" rel="noopener">Facebook <b>↗</b></a>
+              </div>
             </div>
             <ol className="timeline">
               <li data-fade><span>2026 — Now</span><h3>Founder &amp; CEO, VoloLeads</h3><p>Virtual assistant services and automated solutions for real estate wholesalers in the United States.</p></li>
+              <li data-fade><span>2026 — Now</span><h3>Founder &amp; CEO, VoloTech</h3><p>A studio building websites, applications, backend systems, MCP integrations and automation for businesses.</p></li>
               <li data-fade><span>2025 — Now</span><h3>Lead Manager, All With Realty</h3><p>Joined as Virtual Acquisition Team Leader, running a remote cold calling team and its CRM workflows. Conversion rates rose by over 90%, with more than $24,000 in revenue in three months.</p></li>
               <li data-fade><span>2024 — Now</span><h3>Research Assistant, North South University</h3><p>Cleaning large survey datasets and running regression models in Stata for a study of labour-market effects in Cox's Bazar.</p></li>
               <li data-fade><span>2023 — 2025</span><h3>Virtual Telemarketer, Rise Real Estate Group</h3><p>Lead generation and first-contact outreach for the US real estate market, handing qualified sellers to the acquisition team.</p></li>
@@ -278,19 +312,21 @@ export default function Page() {
         {/* CONTACT */}
         <section className="contact" id="contact">
           <div className="contact-form" data-liquid-anchor />
-          <p className="label">08 — Contact</p>
+          <p className="label">09 — Contact</p>
           <h2 data-split>Tell me the task you are <em>tired of doing.</em></h2>
           <p className="sub" data-fade>Send one message describing it. I will reply with how I would automate it and what it would take.</p>
           <div className="actions" data-fade>
             <a className="btn btn-ink btn-xl" data-contact href="https://www.linkedin.com/in/syedmursalin"><span data-contact-label>Message me</span><b>↗</b></a>
-            <a className="btn btn-xl" href="https://www.linkedin.com/in/syedmursalin" target="_blank" rel="noopener">LinkedIn</a>
+            <a className="btn btn-xl" href={`mailto:${CONTACT.email}`}>Email me</a>
+            <a className="btn btn-xl" href={CONTACT.linkedin} target="_blank" rel="noopener">LinkedIn</a>
           </div>
+          <p className="contact-mail" data-fade><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></p>
         </section>
       </main>
 
       <footer className="footer">
-        <span>© 2026 Syed Mursalin</span>
-        <span><a href="https://www.vololeads.com" target="_blank" rel="noopener">VoloLeads</a><a href="https://www.volotech.us" target="_blank" rel="noopener">VoloTech</a><a href="https://www.linkedin.com/in/syedmursalin" target="_blank" rel="noopener">LinkedIn</a></span>
+        <span>© 2026 Syed M. Mursalin</span>
+        <span><a href="https://www.vololeads.com" target="_blank" rel="noopener">VoloLeads</a><a href="https://www.volotech.us" target="_blank" rel="noopener">VoloTech</a><a href={CONTACT.linkedin} target="_blank" rel="noopener">LinkedIn</a><a href={CONTACT.facebook} target="_blank" rel="noopener">Facebook</a><a href={`mailto:${CONTACT.email}`}>Email</a></span>
       </footer>
     </>
   );

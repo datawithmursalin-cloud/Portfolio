@@ -20,6 +20,9 @@ uniform float uTime;
 uniform vec2 uLook;
 uniform float uBlink;
 uniform float uPress;
+uniform vec4 uHoles[8]; // xyz: mouth of the bore (body space), w: its radius
+uniform float uCount;   // how many bores are open, so an untouched body costs nothing extra
+uniform vec4 uDirs[8];  // xyz: direction it was drilled in, w: how deep it goes
 
 vec3 C;
 
@@ -33,6 +36,24 @@ float map(vec3 p) {
   vec3 q = p - C;
   float d = length(q) - 1.0;
   d += (0.03 + 0.05 * uPress) * sin(3.1 * q.x + t * 1.1) * sin(2.7 * q.y + t * 0.9) * sin(2.9 * q.z + t * 1.3);
+
+  // bores: each click drills further into the body along the line of sight,
+  // until repeated clicks open a hole you can see through; then it closes over
+  // The bores are blended into one soft shape first, then pressed out of the body
+  // with a wide blend, so rims are rounded lips and neighbouring holes flow together.
+  float bore = 10.0;
+  for (int i = 0; i < 8; i++) {
+    if (float(i) >= uCount) break;
+    vec4 h = uHoles[i];
+    if (h.w > 0.001) {
+      vec3 pa = q - h.xyz;
+      vec3 ba = uDirs[i].xyz * uDirs[i].w;
+      float k = clamp(dot(pa, ba) / dot(ba, ba), 0.0, 1.0);
+      float flare = 1.0 + 0.4 * smoothstep(0.95, 0.25, k * uDirs[i].w); // wider at the mouth
+      bore = smin(bore, length(pa - ba * k) - h.w * flare, 0.3);
+    }
+  }
+  d = -smin(-d, bore, 0.34);
 
   // satellites orbit through the body, so they merge and separate
   for (int i = 0; i < 2; i++) {
@@ -91,7 +112,7 @@ void main() {
   float t = 3.4;
   float minD = 10.0;
   bool hit = false;
-  for (int i = 0; i < 64; i++) {
+  for (int i = 0; i < 84; i++) {
     float d = map(ro + rd * t);
     minD = min(minD, d);
     if (d < 0.0015) { hit = true; break; }
@@ -108,8 +129,13 @@ void main() {
   vec3 p = ro + rd * t;
   vec3 n = normal(p);
   float fres = pow(1.0 - max(dot(n, -rd), 0.0), 3.0);
+  // inside a bore the walls sit edge-on to the eye: ease off the rim light there
+  // and let them fall into shade, so the hole reads as depth, not as a bright band
+  float inner = smoothstep(0.96, 0.7, length(p - C));
+  fres *= 1.0 - 0.8 * inner;
   vec3 col = env(reflect(rd, n));
   col = mix(col, vec3(1.0), fres * 0.45);
+  col *= mix(1.0, 0.42, inner);
   // a breath of thin-film colour at grazing angles
   col += 0.07 * fres * cos(6.2831 * (vec3(0.0, 0.33, 0.67) + fres * 1.4 + uTime * 0.04));
   col = col / (1.0 + col * 0.28);
@@ -117,7 +143,7 @@ void main() {
 
   // eyes: two black glass capsules set into the main body, aimed at the pointer
   vec3 q = p - C;
-  float onBody = smoothstep(1.13, 1.03, length(q));
+  float onBody = smoothstep(1.13, 1.03, length(q)) * smoothstep(0.88, 0.96, length(q));
   vec3 L = normalize(vec3(uLook.x * 0.62, uLook.y * 0.5, 1.0));
   vec3 R = normalize(cross(vec3(0.0, 1.0, 0.0), L));
   vec3 U = cross(L, R);
@@ -161,7 +187,7 @@ export default function Liquid() {
     gl.enableVertexAttribArray(loc);
     gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
     const u = (n: string) => gl.getUniformLocation(prog, n);
-    const U = { center: u('uCenter'), radius: u('uRadius'), time: u('uTime'), look: u('uLook'), blink: u('uBlink'), press: u('uPress') };
+    const U = { center: u('uCenter'), radius: u('uRadius'), time: u('uTime'), look: u('uLook'), blink: u('uBlink'), press: u('uPress'), holes: u('uHoles'), dirs: u('uDirs'), count: u('uCount') };
 
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const coarse = matchMedia('(pointer: coarse)').matches;
@@ -176,16 +202,56 @@ export default function Liquid() {
     addEventListener('resize', resize);
 
     const pointer = { x: innerWidth * 0.5, y: innerHeight * 0.5, last: -1e9 };
-    const onMove = (e: PointerEvent) => { pointer.x = e.clientX; pointer.y = e.clientY; pointer.last = performance.now(); };
     const onTouch = (e: TouchEvent) => { const t = e.touches[0]; if (t) { pointer.x = t.clientX; pointer.y = t.clientY; pointer.last = performance.now(); } };
     let press = 0, pressTarget = 0;
-    const onDown = () => { pressTarget = 1; setTimeout(() => { pressTarget = 0; }, 420); };
+    // click to drill: a first click dents the body, more clicks in the same place go
+    // deeper until the hole runs right through. Left alone, it regrows by itself.
+    const HOLD = 2.2, REGROW = 2.8;
+    const RADIUS = [0, 0.2, 0.25, 0.3], DEPTH = [0, 0.62, 1.25, 2.9]; // by number of hits; the bore starts 0.3 outside the surface
+    type Hole = { x: number; y: number; z: number; dx: number; dy: number; dz: number; hits: number; t: number; rad: number; depth: number };
+    let holes: Hole[] = [];
+    const holeData = new Float32Array(32), dirData = new Float32Array(32);
+    const geo = { cx: 0, cy: 0, radius: 0, live: false };
+    const look = { x: 0, y: 0 };
+    // cast the same ray the shader does; where it meets the body, start a bore or deepen the one already there
+    const damage = (clientX: number, clientY: number, amount: number) => {
+      if (!geo.live) return false;
+      const ux = (clientX - geo.cx) / geo.radius, uy = -(clientY - geo.cy) / geo.radius;
+      const len = Math.hypot(ux, uy, 6);
+      const rx = ux / len, ry = uy / len, rz = -6 / len;
+      const ox = -look.x * 0.07, oy = -look.y * 0.07, oz = 6;
+      const b = ox * rx + oy * ry + oz * rz;
+      const disc = b * b - (ox * ox + oy * oy + oz * oz - 1);
+      if (disc < 0) return false;
+      const t = -b - Math.sqrt(disc);
+      const x = ox + rx * t, y = oy + ry * t, z = oz + rz * t, now = performance.now();
+      const near = holes.find((h) => Math.hypot(h.x - x, h.y - y, h.z - z) < 0.3);
+      if (near) { near.hits = Math.min(near.hits + amount, 3); near.t = now; return true; }
+      if (holes.length >= 8) holes.shift();
+      holes.push({ x, y, z, dx: rx, dy: ry, dz: rz, hits: 1, t: now, rad: 0, depth: 0.3 });
+      return true;
+    };
+    // a click is one hit; holding and dragging carves a groove along the path
+    let dragging = false;
+    const onDown = (e: PointerEvent) => {
+      pressTarget = 1; setTimeout(() => { pressTarget = 0; }, 420);
+      if ((e.target as HTMLElement | null)?.closest?.('a, button')) return;
+      dragging = damage(e.clientX, e.clientY, 1);
+    };
+    const onMove = (e: PointerEvent) => {
+      pointer.x = e.clientX; pointer.y = e.clientY; pointer.last = performance.now();
+      if (dragging && e.buttons) damage(e.clientX, e.clientY, 0.07);
+    };
+    const onUp = () => { dragging = false; };
+    const onSelect = (e: Event) => { if (dragging) e.preventDefault(); }; // don't select the headline mid-drag
     addEventListener('pointermove', onMove, { passive: true });
     addEventListener('touchmove', onTouch, { passive: true });
     addEventListener('pointerdown', onDown, { passive: true });
+    addEventListener('pointerup', onUp, { passive: true });
+    addEventListener('pointercancel', onUp, { passive: true });
+    document.addEventListener('selectstart', onSelect);
 
-    const anchors = () => Array.from(document.querySelectorAll<HTMLElement>('[data-liquid-anchor]'));
-    const look = { x: 0, y: 0 };
+    const anchors = Array.from(document.querySelectorAll<HTMLElement>('[data-liquid-anchor]'));
     let idle = { x: 0, y: 0, next: 0 };
     let blink = 1, blinkAt = performance.now() + 2600;
     let raf = 0, cleared = false;
@@ -196,12 +262,13 @@ export default function Liquid() {
 
       // find the anchor with the most area on screen
       let best: DOMRect | null = null, bestArea = 0;
-      for (const el of anchors()) {
+      for (const el of anchors) {
         const r = el.getBoundingClientRect();
         const vis = Math.max(0, Math.min(r.bottom, innerHeight) - Math.max(r.top, 0)) * r.width;
         if (vis > bestArea) { bestArea = vis; best = r; }
       }
       if (!best) {
+        geo.live = false;
         if (!cleared) { gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT); cleared = true; }
         return;
       }
@@ -210,6 +277,20 @@ export default function Liquid() {
       const cx = best.left + best.width / 2;
       const cy = best.top + best.height * 0.46;
       const radius = Math.min(best.width, best.height) * 0.235;
+
+      geo.cx = cx; geo.cy = cy; geo.radius = radius; geo.live = true;
+
+      holes = holes.filter((h) => (now - h.t) / 1000 < HOLD + REGROW);
+      holeData.fill(0); dirData.fill(0);
+      holes.forEach((h, i) => {
+        const lo = Math.floor(h.hits), hi = Math.min(lo + 1, 3), f = h.hits - lo;
+        h.rad += (RADIUS[lo] + (RADIUS[hi] - RADIUS[lo]) * f - h.rad) * 0.1;
+        h.depth += (DEPTH[lo] + (DEPTH[hi] - DEPTH[lo]) * f - h.depth) * 0.08;
+        const k = Math.min(Math.max(((now - h.t) / 1000 - HOLD) / REGROW, 0), 1);
+        const open = 1 - k * k * (3 - 2 * k);
+        holeData.set([h.x - h.dx * 0.3, h.y - h.dy * 0.3, h.z - h.dz * 0.3, h.rad * open], i * 4);
+        dirData.set([h.dx, h.dy, h.dz, Math.max(h.depth * open, 0.05)], i * 4);
+      });
 
       const resting = now - pointer.last > 3200;
       if (resting && now > idle.next) idle = { x: (Math.random() - 0.5) * 1.6, y: (Math.random() - 0.5) * 0.9, next: now + 1400 + Math.random() * 2200 };
@@ -227,6 +308,9 @@ export default function Liquid() {
       gl.uniform2f(U.look, look.x, look.y);
       gl.uniform1f(U.blink, blink);
       gl.uniform1f(U.press, press);
+      gl.uniform4fv(U.holes, holeData);
+      gl.uniform4fv(U.dirs, dirData);
+      gl.uniform1f(U.count, holes.length);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     };
     raf = requestAnimationFrame(frame);
@@ -239,6 +323,9 @@ export default function Liquid() {
       removeEventListener('pointermove', onMove);
       removeEventListener('touchmove', onTouch);
       removeEventListener('pointerdown', onDown);
+      removeEventListener('pointerup', onUp);
+      removeEventListener('pointercancel', onUp);
+      document.removeEventListener('selectstart', onSelect);
       document.removeEventListener('visibilitychange', onVis);
     };
   }, []);
