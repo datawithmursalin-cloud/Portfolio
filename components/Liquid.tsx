@@ -191,10 +191,15 @@ export default function Liquid() {
 
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const coarse = matchMedia('(pointer: coarse)').matches;
-    let dpr = 1, W = 0, H = 0;
+    let dpr = 1, W = 0, H = 0, CH = 0;
     const resize = () => {
       dpr = Math.min(window.devicePixelRatio || 1, coarse ? 1.25 : 1.5);
-      W = Math.round(innerWidth * dpr); H = Math.round(innerHeight * dpr);
+      // size from the canvas itself, and only when it really changed: a phone fires
+      // resize every time its address bar moves, and resizing clears the picture
+      CH = canvas.clientHeight || innerHeight;
+      const w = Math.round((canvas.clientWidth || innerWidth) * dpr), h = Math.round(CH * dpr);
+      if (w === W && h === H) return;
+      W = w; H = h;
       canvas.width = W; canvas.height = H;
       gl.viewport(0, 0, W, H);
     };
@@ -302,7 +307,7 @@ export default function Liquid() {
       blink += (1 - blink) * 0.2;
       press += (pressTarget - press) * 0.12;
 
-      gl.uniform2f(U.center, cx * dpr, (innerHeight - cy) * dpr);
+      gl.uniform2f(U.center, cx * dpr, (CH - cy) * dpr);
       gl.uniform1f(U.radius, radius * dpr);
       gl.uniform1f(U.time, reduce ? 4.0 : (now - t0) / 1000);
       gl.uniform2f(U.look, look.x, look.y);
