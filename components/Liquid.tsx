@@ -75,31 +75,6 @@ float map(vec3 p) {
   return d;
 }
 
-// a tapered stroke: a segment whose radius runs from ra to rb
-float stroke(vec2 p, vec2 a, vec2 b, float ra, float rb) {
-  vec2 pa = p - a, ba = b - a;
-  float h = clamp(dot(pa, ba) / dot(ba, ba), 0.0, 1.0);
-  return length(pa - ba * h) - 1.45 * mix(ra, rb, h); // drawn a touch bolder than the logo so it holds up small
-}
-
-// the M mark, drawn as one half and mirrored: a pointed V down the middle
-// and a curled horn on each side. Spans x in [-1, 1], y in about [-0.63, 0.63].
-float mark(vec2 p) {
-  p.x = -abs(p.x);
-  float d = stroke(p, vec2(-0.59, 0.62), vec2(-0.42, 0.33), 0.006, 0.06);
-  d = smin(d, stroke(p, vec2(-0.42, 0.33), vec2(-0.25, -0.05), 0.06, 0.055), 0.012);
-  d = smin(d, stroke(p, vec2(-0.25, -0.05), vec2(-0.1, -0.4), 0.055, 0.035), 0.012);
-  d = smin(d, stroke(p, vec2(-0.1, -0.4), vec2(0.0, -0.63), 0.035, 0.004), 0.012);
-  d = smin(d, stroke(p, vec2(-0.95, 0.17), vec2(-0.97, -0.05), 0.006, 0.035), 0.012);
-  d = smin(d, stroke(p, vec2(-0.97, -0.05), vec2(-0.89, -0.22), 0.035, 0.055), 0.012);
-  d = smin(d, stroke(p, vec2(-0.89, -0.22), vec2(-0.72, -0.29), 0.055, 0.065), 0.012);
-  d = smin(d, stroke(p, vec2(-0.72, -0.29), vec2(-0.5, -0.27), 0.065, 0.06), 0.012);
-  d = smin(d, stroke(p, vec2(-0.5, -0.27), vec2(-0.36, -0.16), 0.06, 0.05), 0.012);
-  d = smin(d, stroke(p, vec2(-0.36, -0.16), vec2(-0.32, 0.02), 0.05, 0.04), 0.012);
-  d = smin(d, stroke(p, vec2(-0.32, 0.02), vec2(-0.39, 0.28), 0.04, 0.02), 0.012);
-  return d;
-}
-
 vec3 normal(vec3 p) {
   vec2 e = vec2(0.0015, -0.0015);
   return normalize(e.xyy * map(p + e.xyy) + e.yyx * map(p + e.yyx) + e.yxy * map(p + e.yxy) + e.xxx * map(p + e.xxx));
@@ -180,14 +155,6 @@ void main() {
     float m = (1.0 - smoothstep(0.78, 1.06, shape)) * onBody;
     vec3 glass = vec3(0.012, 0.013, 0.016);
     col = mix(col, glass, m);
-
-    // the M on the forehead, centred between the eyes and just above them
-    const float MS = 0.16; // half its width, in the same units as the eyes
-    vec2 mp = (vec2(dot(nl, R), dot(nl, U)) - vec2(0.0, 0.35)) / MS;
-    if (abs(mp.x) < 1.1 && abs(mp.y) < 0.75) {
-      float aa = 1.2 / (uRadius * MS);
-      col = mix(col, glass, (1.0 - smoothstep(-aa, aa, mark(mp))) * onBody);
-    }
   }
 
   gl_FragColor = vec4(col, 1.0);
