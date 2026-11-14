@@ -20,6 +20,7 @@ uniform float uTime;
 uniform vec2 uLook;
 uniform float uBlink;
 uniform float uPress;
+uniform float uShadow; // how far below the centre the contact shadow sits, in radii
 uniform vec4 uHoles[8]; // xyz: mouth of the bore (body space), w: its radius
 uniform float uCount;   // how many bores are open, so an untouched body costs nothing extra
 uniform vec4 uDirs[8];  // xyz: direction it was drilled in, w: how deep it goes
@@ -99,7 +100,7 @@ void main() {
   C = vec3(uLook * 0.07, 0.0);
 
   // contact shadow on the page beneath the form
-  vec2 sp = (uv - vec2(0.0, -2.3)) / vec2(1.7, 0.13);
+  vec2 sp = (uv - vec2(0.0, -uShadow)) / vec2(1.7, 0.13);
   float shadow = exp(-dot(sp, sp) * 1.4) * 0.1;
 
   if (length(uv - vec2(0.0, -0.9)) > 3.4) {
@@ -187,10 +188,11 @@ export default function Liquid() {
     gl.enableVertexAttribArray(loc);
     gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
     const u = (n: string) => gl.getUniformLocation(prog, n);
-    const U = { center: u('uCenter'), radius: u('uRadius'), time: u('uTime'), look: u('uLook'), blink: u('uBlink'), press: u('uPress'), holes: u('uHoles'), dirs: u('uDirs'), count: u('uCount') };
+    const U = { center: u('uCenter'), radius: u('uRadius'), time: u('uTime'), look: u('uLook'), blink: u('uBlink'), press: u('uPress'), shadow: u('uShadow'), holes: u('uHoles'), dirs: u('uDirs'), count: u('uCount') };
 
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const coarse = matchMedia('(pointer: coarse)').matches;
+    const narrow = matchMedia('(max-width: 900px)');
     let dpr = 1, W = 0, H = 0, CH = 0;
     const resize = () => {
       dpr = Math.min(window.devicePixelRatio || 1, coarse ? 1.25 : 1.5);
@@ -281,7 +283,10 @@ export default function Liquid() {
 
       const cx = best.left + best.width / 2;
       const cy = best.top + best.height * 0.46;
-      const radius = Math.min(best.width, best.height) * 0.235;
+      // on a phone the slot is short and wide: let the body fill its height rather than
+      // leave room for the drip, and bring the shadow up to the foot of the slot
+      const radius = narrow.matches ? Math.min(best.width * 0.2, best.height * 0.42) : Math.min(best.width, best.height) * 0.235;
+      const shadow = narrow.matches ? Math.min(2.3, Math.max(1.25, (best.bottom - cy) / radius)) : 2.3;
 
       geo.cx = cx; geo.cy = cy; geo.radius = radius; geo.live = true;
 
@@ -313,6 +318,7 @@ export default function Liquid() {
       gl.uniform2f(U.look, look.x, look.y);
       gl.uniform1f(U.blink, blink);
       gl.uniform1f(U.press, press);
+      gl.uniform1f(U.shadow, shadow);
       gl.uniform4fv(U.holes, holeData);
       gl.uniform4fv(U.dirs, dirData);
       gl.uniform1f(U.count, holes.length);
