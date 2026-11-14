@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from 'next';
-import '@fontsource-variable/space-grotesk';
+import '@fontsource/courier-prime/400.css';
+import '@fontsource/courier-prime/400-italic.css';
+import '@fontsource/courier-prime/700.css';
 import './globals.css';
 import { SITE_URL } from '@/lib/site';
 import { CONTACT } from '@/lib/contact';
