@@ -23,6 +23,8 @@ body {
   margin: 0; overflow-x: clip;
   background: var(--paper); color: var(--ink);
   font-family: var(--sans); font-size: 17px; line-height: 1.55;
+  /* a typewriter space is as wide as a letter: pull words closer together */
+  word-spacing: -0.2em;
   -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
 }
 h1, h2, h3, p, ul, ol, dl, dd, figure, blockquote, pre { margin: 0; padding: 0; }
@@ -37,6 +39,8 @@ body { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none
 :focus-visible { outline: 2px solid var(--signal); outline-offset: 4px; }
 .defs { position: absolute; width: 0; height: 0; }
 
+/* big type needs the gap narrowed further */
+h1, h2, h3, .statement-text, .stats dt, .quotes blockquote { word-spacing: -0.3em; }
 /* emphasis is the same face in its regular weight against bold, not a second font */
 em { font-style: normal; font-weight: 400; }
 .label { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mute); }
@@ -315,7 +319,7 @@ h2 { font-size: clamp(38px, 6.6vw, 118px); line-height: 0.94; font-weight: 700; 
   .hero { justify-content: flex-end; padding-bottom: 24px; }
   .hero-form { position: relative; width: 100%; height: auto; flex: 1 1 0; min-height: 28svh; max-height: 38svh; margin-top: 52px; }
   /* sized so "the busywork." (13 typewriter characters) stays on one line */
-  .hero h1 { font-size: calc((100vw - 2 * var(--gutter)) / 7.8); margin: 12px 0 22px -0.03em; }
+  .hero h1 { font-size: calc((100vw - 2 * var(--gutter)) / 7.5); margin: 12px 0 22px -0.03em; }
   .hero-foot { padding-top: 18px; }
   .hero-foot { flex-direction: column; align-items: stretch; gap: 22px; }
   .actions .btn { flex: 1 1 auto; justify-content: space-between; }
