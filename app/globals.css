@@ -104,7 +104,7 @@ em { font-style: normal; font-weight: 400; }
 .hero-copy { position: relative; }
 .hero h1 {
   font-size: clamp(54px, 11.6vw, 216px); line-height: 0.86; font-weight: 700; letter-spacing: -0.02em;
-  margin: 18px 0 clamp(26px, 4vw, 54px) -0.04em; color: #fff; mix-blend-mode: difference;
+  margin: 18px 0 clamp(26px, 4vw, 54px) -0.04em; color: var(--ink);
 }
 
 .hero-foot { display: flex; align-items: flex-end; justify-content: space-between; gap: 30px; flex-wrap: wrap; border-top: 1px solid var(--line); padding-top: 22px; }
@@ -311,7 +311,7 @@ h2 { font-size: clamp(38px, 6.6vw, 118px); line-height: 0.94; font-weight: 700; 
 .footer a { color: var(--ink); }
 
 /* no WebGL: stand in with a still chrome sphere */
-.no-webgl [data-liquid-anchor] { background: radial-gradient(circle at 38% 30%, #fff, #b9b9b6 30%, #2a2a2c 62%, #0c0c0d 72%, transparent 73%) center / min(60%, 420px) min(60%, 420px) no-repeat; }
+.no-webgl [data-liquid-anchor] { background: radial-gradient(circle at 38% 30%, #fff, #ffc2d6 22%, #f58fb1 55%, #c9628a 72%, transparent 73%) center / min(60%, 420px) min(60%, 420px) no-repeat; }
 
 /* ---------- tablet and phone ---------- */
 @media (max-width: 900px) {

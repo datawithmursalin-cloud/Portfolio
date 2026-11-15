@@ -75,6 +75,31 @@ float map(vec3 p) {
   return d;
 }
 
+// a tapered stroke: a segment whose radius runs from ra to rb
+float stroke(vec2 p, vec2 a, vec2 b, float ra, float rb) {
+  vec2 pa = p - a, ba = b - a;
+  float h = clamp(dot(pa, ba) / dot(ba, ba), 0.0, 1.0);
+  return length(pa - ba * h) - 1.45 * mix(ra, rb, h); // drawn a touch bolder than the logo so it holds up small
+}
+
+// the M mark, drawn as one half and mirrored: a pointed V down the middle
+// and a curled horn on each side. Spans x in [-1, 1], y in about [-0.63, 0.63].
+float mark(vec2 p) {
+  p.x = -abs(p.x);
+  float d = stroke(p, vec2(-0.59, 0.62), vec2(-0.42, 0.33), 0.006, 0.06);
+  d = smin(d, stroke(p, vec2(-0.42, 0.33), vec2(-0.25, -0.05), 0.06, 0.055), 0.012);
+  d = smin(d, stroke(p, vec2(-0.25, -0.05), vec2(-0.1, -0.4), 0.055, 0.035), 0.012);
+  d = smin(d, stroke(p, vec2(-0.1, -0.4), vec2(0.0, -0.63), 0.035, 0.004), 0.012);
+  d = smin(d, stroke(p, vec2(-0.95, 0.17), vec2(-0.97, -0.05), 0.006, 0.035), 0.012);
+  d = smin(d, stroke(p, vec2(-0.97, -0.05), vec2(-0.89, -0.22), 0.035, 0.055), 0.012);
+  d = smin(d, stroke(p, vec2(-0.89, -0.22), vec2(-0.72, -0.29), 0.055, 0.065), 0.012);
+  d = smin(d, stroke(p, vec2(-0.72, -0.29), vec2(-0.5, -0.27), 0.065, 0.06), 0.012);
+  d = smin(d, stroke(p, vec2(-0.5, -0.27), vec2(-0.36, -0.16), 0.06, 0.05), 0.012);
+  d = smin(d, stroke(p, vec2(-0.36, -0.16), vec2(-0.32, 0.02), 0.05, 0.04), 0.012);
+  d = smin(d, stroke(p, vec2(-0.32, 0.02), vec2(-0.39, 0.28), 0.04, 0.02), 0.012);
+  return d;
+}
+
 vec3 normal(vec3 p) {
   vec2 e = vec2(0.0015, -0.0015);
   return normalize(e.xyy * map(p + e.xyy) + e.yyx * map(p + e.yyx) + e.yxy * map(p + e.yxy) + e.xxx * map(p + e.xxx));
@@ -123,7 +148,7 @@ void main() {
 
   if (!hit) {
     float edge = smoothstep(0.012, 0.0, minD);
-    gl_FragColor = vec4(vec3(0.28) * edge, max(edge, shadow * (1.0 - edge)));
+    gl_FragColor = vec4(vec3(0.5, 0.2, 0.3) * edge, max(edge, shadow * (1.0 - edge)));
     return;
   }
 
@@ -134,9 +159,14 @@ void main() {
   // and let them fall into shade, so the hole reads as depth, not as a bright band
   float inner = smoothstep(0.96, 0.7, length(p - C));
   fres *= 1.0 - 0.8 * inner;
-  vec3 col = env(reflect(rd, n));
-  col = mix(col, vec3(1.0), fres * 0.45);
-  col *= mix(1.0, 0.42, inner);
+  // bubblegum pink: a soft lit body with the studio reflected in its gloss
+  vec3 pink = vec3(1.0, 0.6, 0.74);
+  float lit = 0.5 + 0.5 * dot(n, normalize(vec3(0.25, 0.8, 0.55)));
+  vec3 refl = env(reflect(rd, n));
+  vec3 col = pink * (0.66 + 0.52 * lit);
+  col += refl * refl * (0.05 + 0.3 * fres);
+  col = mix(col, vec3(1.0, 0.9, 0.94), fres * 0.3);
+  col *= mix(1.0, 0.5, inner);
   // a breath of thin-film colour at grazing angles
   col += 0.07 * fres * cos(6.2831 * (vec3(0.0, 0.33, 0.67) + fres * 1.4 + uTime * 0.04));
   col = col / (1.0 + col * 0.28);
@@ -150,11 +180,20 @@ void main() {
   vec3 U = cross(L, R);
   vec3 nl = normalize(q);
   if (dot(nl, L) > 0.0) {
-    vec2 e = vec2(abs(dot(nl, R)) - 0.17, dot(nl, U) - 0.1);
-    float shape = length(e / vec2(0.036, 0.125 * uBlink + 0.008));
+    vec2 e = vec2(abs(dot(nl, R)) - 0.19, dot(nl, U) - 0.1);
+    e.y += 1.6 * e.x * e.x + 0.12 * e.x; // arch each slit and tip its outer end down
+    float shape = length(e / vec2(0.085, 0.012 * uBlink + 0.007));
     float m = (1.0 - smoothstep(0.78, 1.06, shape)) * onBody;
     vec3 glass = vec3(0.012, 0.013, 0.016);
     col = mix(col, glass, m);
+
+    // the M on the forehead, centred between the eyes and just above them
+    const float MS = 0.16; // half its width, in the same units as the eyes
+    vec2 mp = (vec2(dot(nl, R), dot(nl, U)) - vec2(0.0, 0.35)) / MS;
+    if (abs(mp.x) < 1.1 && abs(mp.y) < 0.75) {
+      float aa = 1.2 / (uRadius * MS);
+      col = mix(col, glass, (1.0 - smoothstep(-aa, aa, mark(mp))) * onBody);
+    }
   }
 
   gl_FragColor = vec4(col, 1.0);
