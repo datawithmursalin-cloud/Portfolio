@@ -180,12 +180,18 @@ void main() {
   vec3 U = cross(L, R);
   vec3 nl = normalize(q);
   if (dot(nl, L) > 0.0) {
-    vec2 e = vec2(abs(dot(nl, R)) - 0.19, dot(nl, U) - 0.1);
-    e.y += 1.6 * e.x * e.x + 0.12 * e.x; // arch each slit and tip its outer end down
-    float shape = length(e / vec2(0.085, 0.012 * uBlink + 0.007));
-    float m = (1.0 - smoothstep(0.78, 1.06, shape)) * onBody;
+    // eyes: black almonds with a red iris, set level so they read as calm, not angry
+    float sx = dot(nl, R);
+    vec2 e = vec2(sx - sign(sx) * 0.2, dot(nl, U) - 0.09);
+    float lid = 0.058 * uBlink + 0.005;
+    float shape = abs(e.y) / lid + (e.x * e.x) / (0.095 * 0.095); // a lens: pointed at both corners
+    float m = (1.0 - smoothstep(0.82, 1.04, shape)) * onBody;
     vec3 glass = vec3(0.012, 0.013, 0.016);
     col = mix(col, glass, m);
+    float iris = 1.0 - smoothstep(0.03, 0.038, length(e));
+    col = mix(col, vec3(0.9, 0.06, 0.1), iris * m);
+    float glint = 1.0 - smoothstep(0.007, 0.012, length(e - vec2(-0.014, 0.016)));
+    col = mix(col, vec3(1.0), glint * m);
 
     // the M on the forehead, centred between the eyes and just above them
     const float MS = 0.16; // half its width, in the same units as the eyes
