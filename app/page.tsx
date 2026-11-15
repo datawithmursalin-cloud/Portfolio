@@ -25,11 +25,12 @@ const TOOLS: [string, string][] = [
 ];
 
 const CAPABILITIES = [
-  ['Custom MCP servers', "An MCP server is a connector that lets an AI assistant like Claude use your own software. I build one around your tools, so you can ask for something in plain English and it reads or updates the real data. You decide what it is allowed to touch.", 'Claude · Codex · Your own tools'],
-  ['CRM workflows', 'I set up pipelines, triggers and follow-up sequences in GoHighLevel, Close, HubSpot and Salesforce. New leads get assigned, tagged and followed up, even on the days your team is flat out.', 'GoHighLevel · Close · HubSpot · Salesforce'],
-  ['Data analysis and visualisation', 'Send me the messy export. I clean it, work out what it says and turn it into charts or a dashboard. If you need the same report every week, I set it up to refresh on its own.', 'Python · SQL · Spreadsheets'],
-  ['Scheduled AI tasks', "Jobs that run on a timer with nobody starting them: yesterday's call summary, notes on new leads, follow-up drafts, the weekly KPI report. A person still checks anything before it goes out.", 'Daily runs · Summaries · Reports'],
-  ['Websites and backends', "Websites, plus the parts behind them that visitors never see: subscription billing, booking, automatic emails and keeping data in sync. I keep them running after launch too.", 'Next.js · Stripe · PostgreSQL'],
+  ['Lead generation systems', "Cold calling teams, dialers and lists, set up so every seller gets called, every conversation gets logged and every warm lead lands with the right person. It's the system behind the $100K+ my clients have made.", 'Cold calling · Dialers · Lead lists'],
+  ['Outbound follow-up', 'Email and SMS drip campaigns that keep following up after the first call, so warm leads stop going cold just because someone was busy.', 'Email drips · SMS drips · Sequences'],
+  ['CRM and dialer setup', 'Pipelines, triggers, tags and follow-up sequences in GoHighLevel, Podio, Close, HubSpot and Salesforce. New leads get assigned and followed up, even on the days your team is slammed.', 'GoHighLevel · Podio · Close · HubSpot'],
+  ['Team KPI tracking', "Every caller's numbers, every day, without anyone building a report. I run this on my own team: dials, conversations and leads per person land in one place each evening.", 'Daily KPIs · Dashboards · Reports'],
+  ['Data analysis', "Send me the messy export. I clean it, work out what it says and turn it into charts or a dashboard you can act on. Statistics is the part of this work I enjoy most.", 'Python · SQL · Spreadsheets'],
+  ['Websites and AI tools', "Modern, animated websites and the backend behind them, plus custom MCP servers: connectors that let an AI assistant like Claude read and update your own tools when you ask in plain English.", 'Next.js · Stripe · MCP'],
 ];
 
 const STAGES = [
@@ -90,10 +91,10 @@ export default function Page() {
         <section className="hero" id="top">
           <div className="hero-form" data-liquid-anchor />
           <div className="hero-copy">
-            <p className="label" data-hero-fade>AI automation · Custom MCP servers · Data workflows</p>
+            <p className="label" data-hero-fade>Lead generation · Automation · Data</p>
             <h1 data-split data-hero>I automate<br />the <em>busywork.</em></h1>
             <div className="hero-foot">
-              <p data-hero-fade>I'm Syed. I started out cold calling, ended up running the team and its CRM, and now I build the automations I wish I'd had back then.</p>
+              <p data-hero-fade>I'm Syed. I started out cold calling, ended up leading the team, then built my own lead generation company. Everything I needed along the way, from CRMs to code to data, I taught myself. Now I build those systems for other businesses.</p>
               <div className="actions" data-hero-fade>
                 <a className="btn btn-ink" data-contact href="#contact"><span data-contact-label>Message me</span><b>↗</b></a>
                 <a className="btn" href="#work">See the work</a>
@@ -118,7 +119,7 @@ export default function Page() {
         <section className="statement">
           <p className="label">01 — Introduction</p>
           <p className="statement-text" data-scrub>
-            Most of what slows a team down is small. Someone forgets to log a call. A lead sits for a week because nobody was told. A report gets built by hand every Friday. I've done all of those jobs myself, so I know <em>which ones a computer should be doing</em>, and I build the thing that does them.
+            Most of what slows a sales team down is small. Someone forgets to log a call. A lead sits for a week because nobody followed up. A report gets built by hand every Friday. I've done all of those jobs myself, so I know <em>which ones a computer should be doing</em>, and I build the thing that does them.
           </p>
         </section>
 
@@ -149,7 +150,7 @@ export default function Page() {
             <div className="pipe-intro">
               <p className="label">04 — Pipeline</p>
               <h2 data-split>Follow <em>one lead</em><br />through it.</h2>
-              <p className="pipe-sub">This is what happens to a single enquiry in the kind of pipeline I build for acquisitions teams. Keep scrolling.</p>
+              <p className="pipe-sub">This is what happens to a single inquiry in the kind of pipeline I build for acquisition teams. Keep scrolling.</p>
             </div>
             <div className="pipe-stages">
               <div className="pipe-line"><i /><b /></div>
@@ -192,11 +193,12 @@ export default function Page() {
               <div className="work-copy">
                 <p className="label">01 / Founder</p>
                 <h3>VoloLeads</h3>
-                <p>My company. We run seller acquisition for US real estate wholesalers, investors and agents. I built the business and the systems it runs on.</p>
+                <p>My lead generation company. We run cold calling and seller acquisition for real estate investors, wholesalers and agents in the US and Canada. I built the business, the team of seven and the systems it runs on.</p>
                 <ul>
-                  <li>Subscription billing on Stripe, with webhooks and renewal emails</li>
-                  <li>Onboarding calls that book themselves into Google Calendar and Meet</li>
-                  <li>CRM builds in GoHighLevel and Podio for clients' acquisitions teams</li>
+                  <li>$100K+ in revenue generated for clients from our leads</li>
+                  <li>Callers trained in-house, with every person's KPIs tracked automatically each day</li>
+                  <li>Subscription billing on Stripe and onboarding calls that book themselves</li>
+                  <li>CRM builds in GoHighLevel and Podio for clients' acquisition teams</li>
                 </ul>
                 <a className="link" href="https://www.vololeads.com" target="_blank" rel="noopener">vololeads.com <b>↗</b></a>
               </div>
@@ -238,11 +240,11 @@ export default function Page() {
               <div className="work-copy">
                 <p className="label">03 / Studio</p>
                 <h3>VoloTech</h3>
-                <p>My studio. We build websites, apps, backends, MCP integrations and automations for businesses, and we stay on to maintain them.</p>
+                <p>My technology studio, started in September 2026. We build websites, apps, AI integrations and automations for businesses, and we stay on to support them.</p>
                 <ul>
                   <li>React, Next.js and TypeScript on the front end</li>
                   <li>Node.js, PostgreSQL and Python on the back end</li>
-                  <li>Seven working demos you can try on the site</li>
+                  <li>Working demos you can try on volotech.us</li>
                 </ul>
                 <a className="link" href="https://www.volotech.us" target="_blank" rel="noopener">volotech.us <b>↗</b></a>
               </div>
@@ -258,8 +260,9 @@ export default function Page() {
             <h2 data-split>VoloLeads <em>so far.</em></h2>
           </header>
           <dl className="stats">
-            <div data-fade><dt data-count="50" data-suffix="+">50+</dt><dd>clients across the United States</dd></div>
+            <div data-fade><dt data-count="50" data-suffix="+">50+</dt><dd>clients across the US and Canada</dd></div>
             <div data-fade><dt data-count="10000" data-suffix="+">10,000+</dt><dd>qualified leads generated</dd></div>
+            <div data-fade><dt data-count="100" data-prefix="$" data-suffix="K+">$100K+</dt><dd>revenue generated for clients</dd></div>
             <div data-fade><dt data-count="4.9" data-decimals="1">4.9</dt><dd>average client rating</dd></div>
           </dl>
           <div className="quotes">
@@ -287,10 +290,11 @@ export default function Page() {
           </header>
           <div className="about-grid">
             <div className="about-copy" data-fade>
-              <p>I started on the phones in 2023, cold calling sellers for a Florida real estate group. Within two years I was leading the acquisition team and looking after its CRM. In 2026 I started VoloLeads and VoloTech.</p>
-              <p>So when I automate something, I've usually done it by hand first. I know which steps get skipped on a busy day, where leads go cold and which reports nobody opens.</p>
-              <p>I also have an economics degree and work as a university research assistant, mostly cleaning survey data and running regressions in Stata. That's where the data side comes from.</p>
-              <p className="label">Based in Dhaka, Bangladesh · Working with clients in the United States</p>
+              <p>I studied economics because I thought that's where my career would be, and tutored high school students in business subjects on the side.</p>
+              <p>In my sophomore year I took a cold calling job with a Florida real estate group. Two years later I was a lead manager, running a remote acquisition team and its CRM, and I spent my nights learning from YouTube, online courses and AI tools. That's when I found out almost everything I needed could be self-taught.</p>
+              <p>So in 2026 I started VoloLeads. Today I lead a team of seven: I hire and train our callers, work with our full-stack developer, and build the systems that run everything, from daily KPI tracking to email and SMS follow-up. Our clients are real estate investors from New York to California and British Columbia.</p>
+              <p>My degree doesn't show all of that. I learn fast and I like hard problems. Statistics is what I enjoy most, and data analytics is where I'm growing next.</p>
+              <p className="label">Based in Dhaka, Bangladesh · Working with clients in the US and Canada</p>
               <div className="about-links">
                 <a className="link" href={`mailto:${CONTACT.email}`}>{CONTACT.email} <b>↗</b></a>
                 <a className="link" href={CONTACT.linkedin} target="_blank" rel="noopener">Full history on LinkedIn <b>↗</b></a>
@@ -298,12 +302,13 @@ export default function Page() {
               </div>
             </div>
             <ol className="timeline">
-              <li data-fade><span>2026 — Now</span><h3>Founder &amp; CEO, VoloLeads</h3><p>Virtual assistant services and automated solutions for real estate wholesalers in the United States.</p></li>
-              <li data-fade><span>2026 — Now</span><h3>Founder &amp; CEO, VoloTech</h3><p>A studio building websites, applications, backend systems, MCP integrations and automation for businesses.</p></li>
-              <li data-fade><span>2025 — Now</span><h3>Lead Manager, All With Realty</h3><p>Joined as Virtual Acquisition Team Leader, running a remote cold calling team and its CRM workflows. Conversion rates rose by over 90%, with more than $24,000 in revenue in three months.</p></li>
-              <li data-fade><span>2024 — Now</span><h3>Research Assistant, North South University</h3><p>Cleaning large survey datasets and running regression models in Stata for a study of labour-market effects in Cox's Bazar.</p></li>
-              <li data-fade><span>2023 — 2025</span><h3>Virtual Telemarketer, Rise Real Estate Group</h3><p>Lead generation and first-contact outreach for the US real estate market, handing qualified sellers to the acquisition team.</p></li>
-              <li data-fade><span>2022 — 2025</span><h3>BS in Economics, North South University</h3><p>Followed by certifications in machine learning foundations and Stata.</p></li>
+              <li data-fade><span>2026 — Now</span><h3>Founder &amp; CEO, VoloLeads</h3><p>Lead generation and seller acquisition for real estate investors in the US and Canada. A team of seven, $100K+ in revenue generated for clients.</p></li>
+              <li data-fade><span>Sep 2026 — Now</span><h3>Founder &amp; CEO, VoloTech</h3><p>A studio building websites, applications, AI integrations and automation for businesses.</p></li>
+              <li data-fade><span>Jun 2025 — Jul 2026</span><h3>Lead Manager, All With Realty</h3><p>Led a remote cold calling team and its CRM workflows. The team brought in $24,000 in deal revenue for the company in three months.</p></li>
+              <li data-fade><span>2024 — Aug 2026</span><h3>Research Assistant, North South University</h3><p>Cleaned large survey datasets and ran regression models in Stata for a study of labor-market effects in Cox's Bazar.</p></li>
+              <li data-fade><span>2023 — 2025</span><h3>Virtual Telemarketer, Rise Real Estate Group</h3><p>Cold calling and first-contact outreach for the US real estate market, handing qualified sellers to the acquisition team.</p></li>
+              <li data-fade><span>2022 — 2026</span><h3>BS in Economics, North South University</h3><p>Plus certifications in machine learning foundations and Stata.</p></li>
+              <li data-fade><span>2019 — 2025</span><h3>Tutor</h3><p>Taught business subjects to high school students.</p></li>
             </ol>
           </div>
         </section>

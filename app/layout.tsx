@@ -6,9 +6,9 @@ import './globals.css';
 import { SITE_URL } from '@/lib/site';
 import { CONTACT } from '@/lib/contact';
 
-const TITLE = 'Syed M. Mursalin | AI Automation, Custom MCP Servers & Data Workflows';
+const TITLE = 'Syed M. Mursalin | Lead Generation, Automation & Data';
 const DESCRIPTION =
-  'Syed M. Mursalin builds custom MCP servers, CRM workflows, data analysis and scheduled AI automations for businesses. Founder of VoloLeads and VoloTech.';
+  'Syed M. Mursalin builds lead generation systems, CRM and dialer workflows, outbound automation and data tools for businesses. Founder of VoloLeads and VoloTech.';
 const SHARE = 'Custom MCP servers, CRM workflows and AI automations that take the busywork out of running a business.';
 
 export const metadata: Metadata = {
@@ -44,7 +44,7 @@ const PERSON = {
     { '@type': 'Organization', name: 'VoloLeads', url: 'https://www.vololeads.com' },
     { '@type': 'Organization', name: 'VoloTech', url: 'https://www.volotech.us' },
   ],
-  knowsAbout: ['AI automation', 'Model Context Protocol', 'CRM workflows', 'Data analysis'],
+  knowsAbout: ['Lead generation', 'AI automation', 'CRM workflows', 'Outbound marketing', 'Data analysis', 'Model Context Protocol'],
   sameAs: [CONTACT.linkedin, CONTACT.facebook],
 };
 

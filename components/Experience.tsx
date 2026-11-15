@@ -111,11 +111,11 @@ export default function Experience() {
 
       // counters
       $$('[data-count]').forEach((el) => {
-        const end = parseFloat(el.dataset.count!), dec = +(el.dataset.decimals || 0), suffix = el.dataset.suffix || '';
+        const end = parseFloat(el.dataset.count!), dec = +(el.dataset.decimals || 0), suffix = el.dataset.suffix || '', prefix = el.dataset.prefix || '';
         const v = { n: 0 };
         gsap.to(v, {
           n: end, duration: 1.8, ease: 'expo.out', scrollTrigger: { trigger: el, start: 'top 88%', once: true },
-          onUpdate: () => { el.textContent = v.n.toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec }) + suffix; },
+          onUpdate: () => { el.textContent = prefix + v.n.toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec }) + suffix; },
         });
       });
 
