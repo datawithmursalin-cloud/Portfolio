@@ -83,7 +83,7 @@ export default function Page() {
           <a href="#work">Work</a>
           <a href="#about">About</a>
         </nav>
-        <a className="nav-cta" data-contact href="#contact"><i />Book a free call</a>
+        <a className="nav-cta" data-contact href="#contact"><i />Contact now</a>
       </header>
 
       <main>
@@ -96,7 +96,7 @@ export default function Page() {
             <div className="hero-foot">
               <p data-hero-fade>I'm Syed. I started out cold calling, ended up leading the team, then built my own lead generation company. Everything I needed along the way, from CRMs to code to data, I taught myself. Now I build those systems for other businesses.</p>
               <div className="actions" data-hero-fade>
-                <a className="btn btn-ink" data-contact href="#contact"><span>Book a free call</span><b>↗</b></a>
+                <a className="btn btn-ink" data-contact href="#contact"><span>Contact now</span><b>↗</b></a>
                 <a className="btn" href="#work">See the work</a>
               </div>
             </div>
@@ -328,11 +328,12 @@ export default function Page() {
           <h2 data-split>What are you <em>tired of doing</em> by hand?</h2>
           <p className="sub" data-fade>Tell me about it on a free call. No pitch deck, no pressure: I'll tell you how I'd fix it and roughly what it would take.</p>
           <div className="actions" data-fade>
-            <a className="btn btn-ink btn-xl" data-contact href="#contact"><span>Book a free call</span><b>↗</b></a>
+            <a className="btn btn-ink btn-xl" data-contact href="#contact"><span>Contact now</span><b>↗</b></a>
             <a className="btn btn-xl" href={`mailto:${CONTACT.email}`}>Email me</a>
             <a className="btn btn-xl" href={CONTACT.linkedin} target="_blank" rel="noopener">LinkedIn</a>
           </div>
           <p className="contact-mail" data-fade><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></p>
+          <p className="contact-mail" data-fade><a href={`https://wa.me/${CONTACT.whatsapp}`} target="_blank" rel="noopener">WhatsApp </a></p>
         </section>
       </main>
 
