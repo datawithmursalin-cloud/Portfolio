@@ -209,14 +209,15 @@ export default function Page() {
           <article className="work-panel">
             <div className="work-inner tone-ink">
               <div className="work-copy">
-                <p className="label">02 / Workflow automation</p>
-                <h3>Custom MCPs</h3>
-                <p>MCP servers I build for one business at a time. They give an AI assistant access to the tools and data that team already uses, limited to what the owner allows.</p>
+                <p className="label">02 / Case study</p>
+                <h3>VoloLeads AI suite</h3>
+                <p>Five AI assistants I built on custom MCP servers to run my own team. They check our callers' work, keep the CRM clean, size up deals and find distressed houses. Nothing changes and nobody gets contacted until a person says yes.</p>
                 <ul>
-                  <li>Connectors for CRMs, dialers, spreadsheets, databases and in-house tools</li>
-                  <li>Ask for an analysis or a chart in plain English</li>
-                  <li>Tasks that run every day and report back</li>
-                  <li>It reads first. Anything it wants to change waits for approval</li>
+                  <li>Beacon checks every caller's KPIs against real dialer calls and logged hours, and flags the gaps</li>
+                  <li>Ledger has prepared and imported 26,000+ lead rows into GoHighLevel across 7 lists</li>
+                  <li>Compass pulls comps, estimates repairs and works out the maximum offer</li>
+                  <li>Scout turns a ZIP code into a ranked list of distressed houses from Street View, no driving required</li>
+                  <li>Every CRM write sits behind a four-step approval, and 83 automated tests keep it honest</li>
                 </ul>
                 <a className="link" href="#demo">Try the demo <b>↑</b></a>
               </div>
@@ -230,7 +231,7 @@ export default function Page() {
     `}<b>{`return`}</b>{` rank(leads);
   }
 );`}</pre>
-                <div className="work-wires"><span>CRM</span><span>Data</span><span>Charts</span><span>Schedules</span><b>AI</b></div>
+                <div className="work-wires"><span>GoHighLevel</span><span>WAVV</span><span>Google Sheets</span><span>Gmail</span><span>Street View</span><b>AI</b></div>
               </div>
             </div>
           </article>
