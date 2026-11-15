@@ -20,8 +20,10 @@ function Shot({ name, alt }: { name: string; alt: string }) {
 const TOOLS: [string, string][] = [
   ['Model Context Protocol', 'mcp'], ['Claude', 'claude'], ['Codex', 'openai'], ['n8n', 'n8n'],
   ['GoHighLevel', 'ghl'], ['Close', 'close'], ['HubSpot', 'hubspot'], ['Salesforce', 'salesforce'],
-  ['Microsoft Office', 'microsoft'], ['Google Workspace', 'google'], ['Python', 'python'], ['PostgreSQL', 'postgres'],
-  ['Stripe', 'stripe'], ['Next.js', 'next'], ['Node.js', 'node'],
+  ['Microsoft Office', 'microsoft'], ['Google Workspace', 'google'], ['Python', 'python'], ['SQL', 'sql'],
+  ['Stata', 'stata'], ['Looker Studio', 'looker'], ['Power BI', 'powerbi'], ['JavaScript', 'javascript'], ['React', 'react'],
+  ['Next.js', 'next'], ['Tailwind', 'tailwind'], ['Node.js', 'node'], ['Supabase', 'supabase'], ['Vercel', 'vercel'],
+  ['Git', 'git'], ['GitHub', 'github'], ['VS Code', 'vscode'],
 ];
 
 const CAPABILITIES = [
