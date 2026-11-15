@@ -40,11 +40,12 @@ export default function Experience() {
 
     // contact buttons
     const hasWa = /^\d{7,15}$/.test(CONTACT.whatsapp);
-    const href = hasWa ? `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(CONTACT.whatsappText)}` : CONTACT.linkedin;
+    const href = CONTACT.booking
+      || (hasWa ? `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(CONTACT.whatsappText)}` : '')
+      || `mailto:${CONTACT.email}?subject=${encodeURIComponent('Free call')}`;
     $$<HTMLAnchorElement>('[data-contact]').forEach((a) => {
-      a.href = href; a.target = '_blank'; a.rel = 'noopener';
-      const label = a.querySelector('[data-contact-label]');
-      if (label) label.textContent = hasWa ? 'WhatsApp me' : 'Message me';
+      a.href = href;
+      if (!href.startsWith('mailto:')) { a.target = '_blank'; a.rel = 'noopener'; }
     });
 
     // the workflow graph: p (0 to 1) draws each set of connections, then lights the row it reaches

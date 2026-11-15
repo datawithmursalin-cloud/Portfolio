@@ -1,9 +1,11 @@
-/* Put your WhatsApp number here in international format, digits only
-   (for example '15551234567'). While it is empty, every contact button
-   falls back to LinkedIn and reads "Message me". */
+/* Where the "Book a free call" buttons go, first match wins:
+   booking   a scheduling link (Calendly, Cal.com, Google appointment page)
+   whatsapp  your number in international format, digits only (e.g. '8801XXXXXXXXX')
+   otherwise an email to the address below, already titled "Free call". */
 export const CONTACT = {
+  booking: '',
   whatsapp: '',
-  whatsappText: "Hi Syed, I saw your portfolio and I'd like to talk about automating ",
+  whatsappText: "Hi Syed, I saw your portfolio and I'd like to book a free call about ",
   linkedin: 'https://www.linkedin.com/in/syedmursalin',
   facebook: 'https://www.facebook.com/syedmursalinn/',
   email: 'datawithmursalin@gmail.com',
