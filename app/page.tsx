@@ -310,15 +310,23 @@ export default function Page() {
                 <a className="link" href={CONTACT.facebook} target="_blank" rel="noopener">Facebook <b>↗</b></a>
               </div>
             </div>
+            <div className="history">
+            <p className="label">Experience</p>
             <ol className="timeline">
               <li data-fade><span>2026 — Now</span><h3>Founder &amp; CEO, VoloLeads</h3><p>Lead generation and seller acquisition for real estate investors in the US and Canada. A team of seven, $100K+ in revenue generated for clients.</p></li>
               <li data-fade><span>Sep 2026 — Now</span><h3>Founder &amp; CEO, VoloTech</h3><p>A studio building websites, applications, AI integrations and automation for businesses.</p></li>
               <li data-fade><span>Jun 2025 — Jul 2026</span><h3>Lead Manager, All With Realty</h3><p>Led a remote cold calling team and its CRM workflows. The team brought in $24,000 in deal revenue for the company in three months.</p></li>
               <li data-fade><span>2024 — Aug 2026</span><h3>Research Assistant, North South University</h3><p>Cleaned large survey datasets and ran regression models in Stata for a study of labor-market effects in Cox's Bazar.</p></li>
               <li data-fade><span>2023 — 2025</span><h3>Virtual Telemarketer, Rise Real Estate Group</h3><p>Cold calling and first-contact outreach for the US real estate market, handing qualified sellers to the acquisition team.</p></li>
-              <li data-fade><span>2022 — 2026</span><h3>BS in Economics, North South University</h3><p>Plus certifications in machine learning foundations and Stata.</p></li>
               <li data-fade><span>2019 — 2025</span><h3>Tutor</h3><p>Taught business subjects to high school students.</p></li>
             </ol>
+            <p className="label">Education</p>
+            <ol className="timeline">
+              <li data-fade><span>2022 — 2026</span><h3>BS in Economics, North South University</h3><p>Plus certifications in machine learning foundations and Stata.</p></li>
+              <li data-fade><span>2019 — 2021</span><h3>A Levels, Little Jewels School</h3><p>Chittagong, Bangladesh.</p></li>
+              <li data-fade><span>2017 — 2019</span><h3>O Levels, Little Jewels School</h3><p>Chittagong, Bangladesh.</p></li>
+            </ol>
+            </div>
           </div>
         </section>
 
