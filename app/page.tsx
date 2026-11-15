@@ -278,8 +278,16 @@ export default function Page() {
               <blockquote>When I ran into problems importing our lead data into the CRM they stepped in and handled the integration for me.</blockquote>
               <figcaption>Rodrigo Moran<span>Real estate wholesaler, Florida</span></figcaption>
             </figure>
+            <figure data-fade>
+              <blockquote>Their cold caller is producing results and the customer service from the team is top notch, they will never leave you waiting and are always ready to help remedy issues immediately.</blockquote>
+              <figcaption>Raith<span>Verified Trustpilot review</span></figcaption>
+            </figure>
+            <figure data-fade>
+              <blockquote>Syed and his team handle everything and are very hands on if you have any issues or concerns. I always look forward to the leads they bring in weekly.</blockquote>
+              <figcaption>Kristian Espino<span>Verified Trustpilot review</span></figcaption>
+            </figure>
           </div>
-          <p className="label note">Figures and client reviews are for VoloLeads, as published on vololeads.com.</p>
+          <p className="label note">Figures and client reviews are for VoloLeads, as published on vololeads.com. <a href="https://www.trustpilot.com/review/vololeads.com" target="_blank" rel="noopener">Read every review on Trustpilot ↗</a></p>
         </section>
 
         {/* ABOUT */}
