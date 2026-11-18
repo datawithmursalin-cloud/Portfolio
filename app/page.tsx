@@ -344,7 +344,6 @@ export default function Page() {
             <a className="btn btn-xl" href={CONTACT.linkedin} target="_blank" rel="noopener">LinkedIn</a>
           </div>
           <p className="contact-mail" data-fade><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></p>
-          <p className="contact-mail" data-fade><a href={`https://wa.me/${CONTACT.whatsapp}`} target="_blank" rel="noopener">WhatsApp </a></p>
         </section>
       </main>
 
